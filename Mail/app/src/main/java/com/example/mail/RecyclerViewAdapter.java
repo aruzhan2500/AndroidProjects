@@ -1,73 +1,58 @@
 package com.example.mail;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
 import java.util.Random;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private List<Email> emailList;
+    private Email[] emailList;
     private Context context;
+    private EmailClick emailClick;
 
-    public RecyclerViewAdapter(List<Email> emailList, Context context) {
+    public RecyclerViewAdapter(Email[] emailList, Context context) {
         this.emailList = emailList;
         this.context = context;
+        this.emailClick = (EmailClick)context;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mail_item, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, context);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        holder.tvEmailSender.setText(emailList.get(position).getEmailSender());
-        holder.tvEmailTitle.setText(emailList.get(position).getEmailTitle());
-        holder.tvEmailDetails.setText(emailList.get(position).getEmailDetails());
-        holder.tvEmailDuration.setText(emailList.get(position).getEmailDuration());
+        ViewHolder viewHolder = holder;
+        viewHolder.tvEmailSender.setText(emailList[position].getEmailSender());
+        viewHolder.tvEmailTitle.setText(emailList[position].getEmailTitle());
+        viewHolder.tvEmailDetails.setText(emailList[position].getEmailDetails());
+        viewHolder.tvEmailDuration.setText(emailList[position].getEmailDuration());
 
-        holder.tvIcon.setText(emailList.get(position).getEmailSender().substring(0, 1));
+        viewHolder.tvIcon.setText(emailList[position].getEmailSender().substring(0, 1));
 
         Random mRandom = new Random();
         final int color = Color.argb(255, mRandom.nextInt(256), mRandom.nextInt(256), mRandom.nextInt(256));
-        ((GradientDrawable) holder.tvIcon.getBackground()).setColor(color);
+        ((GradientDrawable) viewHolder.tvIcon.getBackground()).setColor(color);
 
-        holder.layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, MailDetailFragment.class);
-                intent.putExtra("sender", holder.tvEmailSender.getText().toString());
-                intent.putExtra("title", holder.tvEmailTitle.getText().toString());
-                intent.putExtra("details", holder.tvEmailDetails.getText().toString());
-                intent.putExtra("duration", holder.tvEmailDuration.getText().toString());
-                intent.putExtra("icon", holder.tvIcon.getText().toString());
-                intent.putExtra("colorIcon", color);
-                context.startActivity(intent);
-
-            }
-        });
+        viewHolder.setPosition(position);
     }
 
     @Override
     public int getItemCount() {
-        return emailList.size();
+        return emailList.length;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -78,9 +63,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView tvEmailDetails;
         TextView tvEmailDuration;
         ImageView ivFavorite;
-        RelativeLayout layout;
+        int position;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, final Context context) {
             super(itemView);
 
             tvIcon = itemView.findViewById(R.id.tvIcon);
@@ -89,7 +74,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             tvEmailDetails = itemView.findViewById(R.id.tvEmailDetails);
             tvEmailDuration = itemView.findViewById(R.id.tvEmailDuration);
             ivFavorite = itemView.findViewById(R.id.ivFavorite);
-            layout = itemView.findViewById(R.id.mailItem);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    emailClick.emailClicked(emailList[position]);
+                }
+            });
         }
+
+        public void setPosition(int position){
+            this.position = position;
+        }
+    }
+
+    interface EmailClick{
+        void emailClicked(Email email);
     }
 }

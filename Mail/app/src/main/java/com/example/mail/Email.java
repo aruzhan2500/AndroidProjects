@@ -18,31 +18,16 @@ public class Email {
         return emailSender;
     }
 
-    public void setEmailSender(String emailSender) {
-        this.emailSender = emailSender;
-    }
-
     public String getEmailTitle() {
         return emailTitle;
-    }
-
-    public void setEmailTitle(String emailTitle) {
-        this.emailTitle = emailTitle;
     }
 
     public String getEmailDetails() {
         return emailDetails;
     }
 
-    public void setEmailDetails(String emailDetails) {
-        this.emailDetails = emailDetails;
-    }
-
     public String getEmailDuration() {
         return emailDuration;
     }
 
-    public void setEmailDuration(String emailDuration) {
-        this.emailDuration = emailDuration;
-    }
 }
