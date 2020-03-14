@@ -21,10 +21,10 @@ public class MailDetailFragment extends Fragment {
     private TextView tvEmailDuration;
     private TextView tvEmailDetails;
     Email email;
-    int position;
+    boolean detail = true;
 
     public MailDetailFragment(){
-        this.position = -1;
+        this.detail = false;
     }
 
     public MailDetailFragment(Email email){
@@ -41,7 +41,7 @@ public class MailDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if(position != -1){
+        if(detail != false){
             tvEmailTitle = view.findViewById(R.id.tvEmailTitle);
             ivFavorite = view.findViewById(R.id.ivFavorite);
             tvIcon = view.findViewById(R.id.tvIcon);
