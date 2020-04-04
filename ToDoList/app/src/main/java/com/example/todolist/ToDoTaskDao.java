@@ -10,18 +10,21 @@ import java.util.List;
 
 @Dao
 public interface ToDoTaskDao {
-    @Query("SELECT * FROM todotask")
+    @Query("SELECT * FROM " + AppDatabase.TABLE_NAME_TODO)
     List<ToDoTask> getAll();
 
-    @Query("SELECT * FROM todotask WHERE id = :id")
-    ToDoTask getToDoTask(long id);
+    @Query("SELECT * FROM " + AppDatabase.TABLE_NAME_TODO + " WHERE category = :category")
+    List<ToDoTask> getToDoListByCategory(String category);
+
+    @Query("SELECT * FROM " + AppDatabase.TABLE_NAME_TODO + " WHERE id = :id")
+    ToDoTask getToDoListById(int id);
 
     @Insert
-    void insert(ToDoTask todotask);
+    long insertToDoTask(ToDoTask todoTask);
 
-    @Query("Update todotask Set title = :title, description = :description, status = :status, category = :category, duration = :duration where id = :id")
-    void update(long id, String title, String description, String status, long category, String duration);
+    @Update
+    int updateToDoTask(ToDoTask todoTask);
 
-    @Query("Delete From todotask where id = :id")
-    void delete(long id);
+    @Delete
+    int deleteToDoTask(ToDoTask todoTask);
 }

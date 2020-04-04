@@ -6,6 +6,6 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Category {
     @PrimaryKey(autoGenerate = true)
-    public long id;
-    public String name;
+    public int id;
+    public String title;
 }

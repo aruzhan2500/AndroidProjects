@@ -3,41 +3,57 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="5dp"
-    android:layout_marginTop="10dp"
+    android:orientation="horizontal"
+    android:background="#b2ebf2"
+    android:weightSum="100"
+    android:gravity="center_vertical"
     android:id="@+id/todoItem">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Title"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:textSize="30dp"/>
+    <View
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:background="#00bcd4"/>
 
-    <TextView
-        android:id="@+id/status"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Status"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="italic"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:textSize="20dp"/>
-    <TextView
-        android:id="@+id/category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Category"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_gravity="end"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:textSize="20dp"/>
+        android:layout_weight="97"
+        android:orientation="vertical"
+        android:padding="2dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="25dp"/>
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="italic"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="15dp"/>
+        <TextView
+            android:id="@+id/category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:textColor="@color/colorPrimaryDark"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="15dp"/>
+
+    </LinearLayout>
+
 
 </LinearLayout>

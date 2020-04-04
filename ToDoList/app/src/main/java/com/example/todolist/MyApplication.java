@@ -8,14 +8,14 @@ import androidx.room.Room;
 public class MyApplication extends Application {
 
     public static MyApplication instance;
-    public static AppDatabase database;
+    private AppDatabase database;
 
     @Override
     public void onCreate() {
         super.onCreate();
         Log.e("MyApplication", "onCreate");
         instance = this;
-        database = Room.databaseBuilder(this, AppDatabase.class, "todo_list_db").
+        database = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DB_NAME).
                 allowMainThreadQueries().
                 build();
     }

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ToDoDetailActivity"
+    android:orientation="vertical"
+    android:background="#b2ebf2">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"
+        android:padding="5dp"
+        android:hint="Title"
+        android:textSize="30dp"
+        android:layout_margin="5dp"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/description"
+        android:padding="5dp"
+        android:hint="Description"
+        android:textSize="20dp"
+        android:layout_margin="5dp"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/status"
+        android:padding="5dp"
+        android:hint="Status"
+        android:textSize="20dp"
+        android:textStyle="italic"
+        android:layout_margin="5dp"
+        android:textColor="#6D9DC5"/>
+
+    <Spinner
+        android:id="@+id/category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_margin="8dp"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/duration"
+        android:layout_gravity="end"
+        android:padding="5dp"
+        android:hint="Duration"
+        android:textSize="20dp"
+        android:layout_margin="5dp"
+        android:textColor="#6D9DC5"/>
+
+    <Button
+        android:id="@+id/btnDone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@color/colorAccent"
+        android:textColor="@android:color/white"
+        android:text="DONE"/>
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@color/colorAccent"
+        android:textColor="@android:color/white"
+        android:text="DELETE"/>
+
+</LinearLayout>

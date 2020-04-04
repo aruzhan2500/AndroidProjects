@@ -1,26 +1,20 @@
 package com.example.todolist;
-
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import static androidx.room.ForeignKey.CASCADE;
+import java.io.Serializable;
 
-@Entity(foreignKeys = {
-        @ForeignKey(entity = Category.class,
-            parentColumns = {"id"},
-            childColumns = {"category"},
-            onDelete = CASCADE)},
-        indices = {@Index("category")})
-public class ToDoTask {
+@Entity(tableName = AppDatabase.TABLE_NAME_TODO)
+public class ToDoTask implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    public long id;
+    public int id;
     public String title;
     public String description;
     public String status;
-    public long category;
+    public String category;
     public String duration;
 
+    public ToDoTask() {
+    }
 }
