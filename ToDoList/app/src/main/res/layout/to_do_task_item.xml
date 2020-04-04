@@ -9,38 +9,35 @@
     android:id="@+id/todoItem">
 
     <TextView
-        android:id="@+id/todoItemTitle"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Title"
         android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
         android:maxLines="1"
-        android:ellipsize="end"/>
+        android:ellipsize="end"
+        android:textSize="30dp"/>
 
     <TextView
-        android:id="@+id/todoItemStatus"
+        android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Status"
         android:textColor="@color/colorPrimaryDark"
+        android:textStyle="italic"
         android:maxLines="1"
-        android:ellipsize="end"/>
+        android:ellipsize="end"
+        android:textSize="20dp"/>
     <TextView
-        android:id="@+id/todoItemCategory"
+        android:id="@+id/category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Category"
         android:textColor="@color/colorPrimaryDark"
-        android:maxLines="1"
-        android:ellipsize="end"/>
-
-    <Button
-        android:id="@+id/btnDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Details"
-        android:textSize="10dp"
         android:layout_gravity="end"
-        android:textColor="@color/colorPrimaryDark" />
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="20dp"/>
 
 </LinearLayout>
