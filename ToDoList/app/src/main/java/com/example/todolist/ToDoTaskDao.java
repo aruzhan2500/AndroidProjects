@@ -10,14 +10,11 @@ import java.util.List;
 
 @Dao
 public interface ToDoTaskDao {
-    @Query("SELECT * FROM " + AppDatabase.TABLE_NAME_TODO)
+    @Query("SELECT * FROM toDoTasks")
     List<ToDoTask> getAll();
 
-    @Query("SELECT * FROM " + AppDatabase.TABLE_NAME_TODO + " WHERE category = :category")
-    List<ToDoTask> getToDoListByCategory(String category);
-
-    @Query("SELECT * FROM " + AppDatabase.TABLE_NAME_TODO + " WHERE id = :id")
-    ToDoTask getToDoListById(int id);
+    @Query("SELECT * FROM toDoTasks WHERE id = :id")
+    ToDoTask getToDoTaskById(int id);
 
     @Insert
     long insertToDoTask(ToDoTask todoTask);

@@ -15,7 +15,7 @@ public class MyApplication extends Application {
         super.onCreate();
         Log.e("MyApplication", "onCreate");
         instance = this;
-        database = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DB_NAME).
+        database = Room.databaseBuilder(this, AppDatabase.class, "toDoTasks").
                 allowMainThreadQueries().
                 build();
     }

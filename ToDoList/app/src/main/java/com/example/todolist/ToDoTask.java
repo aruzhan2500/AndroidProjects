@@ -4,7 +4,7 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity(tableName = AppDatabase.TABLE_NAME_TODO)
+@Entity(tableName = "toDoTasks")
 public class ToDoTask implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
