@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -44,7 +43,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.id = job.getId();
         holder.title.setText(job.getTitle());
         holder.type.setText(job.getType());
-        holder.created_at.setText(job.getCreated_at());
+        holder.created_at.setText(job.getCreatedAt());
 
         for(SavedJob s : savedJobs){
             if(job.getId().equals(s.id)) {
@@ -54,7 +53,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
         Picasso.get()
-                .load(job.getLogo())
+                .load(job.getCompanyLogo())
                 .placeholder(R.drawable.ic_import_contacts_black_24dp)
                 .error(R.drawable.ic_import_contacts_black_24dp)
                 .resize(200, 200)
@@ -64,12 +63,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View v) {
                 if(clickListener != null){
-                    clickListener.launchIntent(position, job);
+                    clickListener.replaceFragment(position, job);
                 }
             }
         });
 
-        final boolean is_saved_finally = is_saved;
+        boolean is_saved_finally = is_saved;
         holder.save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +105,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public interface ClickListener{
-        void launchIntent(int id, Job job);
+        void replaceFragment(int id, Job job);
     }
 }

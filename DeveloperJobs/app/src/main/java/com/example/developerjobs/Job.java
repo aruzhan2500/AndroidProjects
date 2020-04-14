@@ -1,37 +1,62 @@
 package com.example.developerjobs;
 
-public class Job {
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    private String id;
-    private String title;
-    private String type;
-    private String url;
-    private String created_at;
-    private String company;
-    private String company_url;
-    private String location;
-    private String description;
-    private String how_to_apply;
-    private String logo;
+public class Job {
 
     public Job() {
     }
 
-    public Job(String id, String title, String type, String url, String created_at,
-               String company, String company_url, String location, String description,
-               String how_to_apply, String logo) {
+    public Job(String id, String type, String url, String createdAt, String company,
+               String companyUrl, String location, String title, String description,
+               String howToApply, String companyLogo) {
         this.id = id;
-        this.title = title;
         this.type = type;
         this.url = url;
-        this.created_at = created_at;
+        this.createdAt = createdAt;
         this.company = company;
-        this.company_url = company_url;
+        this.companyUrl = companyUrl;
         this.location = location;
+        this.title = title;
         this.description = description;
-        this.how_to_apply = how_to_apply;
-        this.logo = logo;
+        this.howToApply = howToApply;
+        this.companyLogo = companyLogo;
     }
+
+    @SerializedName("id")
+    @Expose
+    private String id;
+    @SerializedName("type")
+    @Expose
+    private String type;
+    @SerializedName("url")
+    @Expose
+    private String url;
+    @SerializedName("created_at")
+    @Expose
+    private String createdAt;
+    @SerializedName("company")
+    @Expose
+    private String company;
+    @SerializedName("company_url")
+    @Expose
+    private String companyUrl;
+    @SerializedName("location")
+    @Expose
+    private String location;
+    @SerializedName("title")
+    @Expose
+    private String title;
+    @SerializedName("description")
+    @Expose
+    private String description;
+    @SerializedName("how_to_apply")
+    @Expose
+    private String howToApply;
+    @SerializedName("company_logo")
+    @Expose
+    private String companyLogo;
 
     public String getId() {
         return id;
@@ -39,14 +64,6 @@ public class Job {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getType() {
@@ -65,12 +82,12 @@ public class Job {
         this.url = url;
     }
 
-    public String getCreated_at() {
-        return created_at;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getCompany() {
@@ -81,12 +98,12 @@ public class Job {
         this.company = company;
     }
 
-    public String getCompany_url() {
-        return company_url;
+    public String getCompanyUrl() {
+        return companyUrl;
     }
 
-    public void setCompany_url(String company_url) {
-        this.company_url = company_url;
+    public void setCompanyUrl(String companyUrl) {
+        this.companyUrl = companyUrl;
     }
 
     public String getLocation() {
@@ -97,6 +114,14 @@ public class Job {
         this.location = location;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -105,24 +130,20 @@ public class Job {
         this.description = description;
     }
 
-    public String getHow_to_apply() {
-        return how_to_apply;
+    public String getHowToApply() {
+        return howToApply;
     }
 
-    public void setHow_to_apply(String how_to_apply) {
-        this.how_to_apply = how_to_apply;
+    public void setHowToApply(String howToApply) {
+        this.howToApply = howToApply;
     }
 
-    public String getLogo() {
-        return logo;
+    public String getCompanyLogo() {
+        return companyLogo;
     }
 
-    public void setLogo(String logo) {
-        this.logo = logo;
+    public void setCompanyLogo(String companyLogo) {
+        this.companyLogo = companyLogo;
     }
 
-    @Override
-    public String toString() {
-        return title;
-    }
 }

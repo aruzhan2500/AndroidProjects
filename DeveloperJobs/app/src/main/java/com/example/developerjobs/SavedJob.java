@@ -13,7 +13,7 @@ public class SavedJob {
     public SavedJob() {
     }
 
-    public SavedJob(@NonNull String id) {
+    public SavedJob(String id) {
         this.id = id;
     }
 }

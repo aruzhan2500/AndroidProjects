@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+            setContentView(R.layout.activity_main);
         if (savedInstanceState == null){
             getFragmentManager().beginTransaction()
                     .replace(R.id.container, MainFragment.newInstance())
@@ -30,20 +30,21 @@ public class MainActivity extends AppCompatActivity {
                                 .replace(R.id.container, MainFragment.newInstance())
                                 .addToBackStack(null)
                                 .commitAllowingStateLoss();
-                        return true;
+                        break;
                     case R.id.navigation_favourites:
                         getFragmentManager().beginTransaction()
                                 .replace(R.id.container, SavedJobsFragment.newInstance())
                                 .addToBackStack(null)
                                 .commitAllowingStateLoss();
-                        return true;
+                        break;
                     case R.id.navigation_more:
                         getFragmentManager().beginTransaction()
                                 .replace(R.id.container, MoreFragment.newInstance())
                                 .addToBackStack(null)
                                 .commitAllowingStateLoss();
+                        break;
                 }
-                return false;
+                return true;
             }
         });
     }

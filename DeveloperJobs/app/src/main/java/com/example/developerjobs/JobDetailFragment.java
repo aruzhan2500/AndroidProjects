@@ -38,13 +38,13 @@ public class JobDetailFragment extends Fragment {
         args.putString("title", job.getTitle());
         args.putString("type", job.getType());
         args.putString("url", job.getUrl());
-        args.putString("created_at", job.getCreated_at());
+        args.putString("created_at", job.getCreatedAt());
         args.putString("company", job.getCompany());
-        args.putString("company_url", job.getCompany_url());
+        args.putString("company_url", job.getCompanyUrl());
         args.putString("location", job.getLocation());
-        args.putString("how_to_apply", job.getHow_to_apply());
+        args.putString("how_to_apply", job.getHowToApply());
         args.putString("description", job.getDescription());
-        args.putString("logo", job.getLogo());
+        args.putString("logo", job.getCompanyLogo());
         fragment.setArguments(args);
         return fragment;
     }

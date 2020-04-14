@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import android.app.Fragment;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,12 +41,12 @@ public class SavedJobsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_saved_jobs, container, false);
-        getActivity().getActionBar().setTitle("Saved jobs");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Saved jobs");
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         clickListener = new RecyclerViewAdapter.ClickListener(){
             @Override
-            public void launchIntent(int id, Job job) {
+            public void replaceFragment(int id, Job job) {
                 getFragmentManager().beginTransaction()
                         .replace(R.id.container, JobDetailFragment.newInstance(job))
                         .addToBackStack(null)
@@ -60,8 +62,7 @@ public class SavedJobsFragment extends Fragment {
                 .build();
         APIService apiService = retrofit.create(APIService.class);
         for(SavedJob s : savedJobs){
-            Call<Job> call = apiService.getJobById(s.id);
-            call.enqueue(new Callback<Job>() {
+            apiService.getJobById(s.id).enqueue(new Callback<Job>() {
                 @Override
                 public void onResponse(Call<Job> call, Response<Job> response) {
                     Job job = response.body();
@@ -72,7 +73,7 @@ public class SavedJobsFragment extends Fragment {
 
                 @Override
                 public void onFailure(Call<Job> call, Throwable t) {
-                    Log.e("Calling job:", t.getMessage());
+                    t.printStackTrace();
                 }
             });
         }
