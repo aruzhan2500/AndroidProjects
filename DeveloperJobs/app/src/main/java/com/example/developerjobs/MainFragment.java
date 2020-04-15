@@ -2,10 +2,10 @@ package com.example.developerjobs;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.os.Build;
 import android.os.Bundle;
 
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,8 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,10 +22,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.Retrofit.Builder;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
@@ -46,7 +49,7 @@ public class MainFragment extends Fragment {
         return fragment;
     }
 
-        public static MainFragment newInstance(String description, String location, boolean is_full_time){
+    public static MainFragment newInstance(String description, String location, boolean is_full_time){
         MainFragment mainFragment = new MainFragment();
         Bundle args = new Bundle();
         args.putString("description", description);
@@ -54,26 +57,6 @@ public class MainFragment extends Fragment {
         args.putBoolean("is_full_time", is_full_time);
         mainFragment.setArguments(args);
         return mainFragment;
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://jobs.github.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        APIService apiService = retrofit.create(APIService.class);
-        try {
-            String description = getArguments().getString("description", "");
-            String location = getArguments().getString("location", "");
-            boolean is_full_time = getArguments().getBoolean("is_full_time");
-            this.getFilteredJobs(description, location, is_full_time);
-        }
-        catch (Exception e){
-            this.getJobs();
-        }
     }
 
     @Override
@@ -90,13 +73,46 @@ public class MainFragment extends Fragment {
                 getFragmentManager().beginTransaction()
                         .replace(R.id.container, JobDetailFragment.newInstance(job))
                         .addToBackStack(null)
-                        .commitAllowingStateLoss();
+                        .commit();
             }
         };
         adapter = new RecyclerViewAdapter(jobs, clickListener);
         recyclerView.setAdapter(adapter);
         return view;
     }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        try{
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+            OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                    .addInterceptor(logging)
+                    .build();
+            retrofit = new Retrofit.Builder()
+                    .baseUrl("https://jobs.github.com/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(okHttpClient)
+                    .build();
+            apiService = retrofit.create(APIService.class);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        try {
+            String description = getArguments().getString("description", "");
+            String location = getArguments().getString("location", "");
+            boolean is_full_time = getArguments().getBoolean("is_full_time");
+            this.getFilteredJobs(description, location, is_full_time);
+        }
+        catch (Exception e){
+            this.getJobs();
+        }
+    }
+
+
 
     public void getJobs(){
         apiService.getJobs().enqueue(new Callback<List<Job>>() {
@@ -110,7 +126,7 @@ public class MainFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<List<Job>> call, Throwable t) {
-                t.printStackTrace();
+                Log.e("Error on getJobs:",t.getMessage());
             }
         });
     }
@@ -127,7 +143,8 @@ public class MainFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<List<Job>> call, Throwable t) {
-                t.printStackTrace();
+                Log.e("Error on getFiltered:",t.getMessage());
+                Toast.makeText(getActivity().getApplicationContext(), "Could not find such a job", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -150,7 +167,7 @@ public class MainFragment extends Fragment {
 
                     @Override
                     public void onFailure(Call<List<Job>> call, Throwable t) {
-                        t.printStackTrace();
+                        Log.e("Error on search:", t.getMessage());
                     }
                 });
                 return false;
@@ -158,6 +175,19 @@ public class MainFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                apiService.getJobsFromSearch(newText).enqueue(new Callback<List<Job>>() {
+                    @Override
+                    public void onResponse(Call<List<Job>> call, Response<List<Job>> response) {
+                        jobs.clear();
+                        jobs.addAll(response.body());
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Job>> call, Throwable t) {
+                        Log.e("Error on search:", t.getMessage());
+                    }
+                });
                 return false;
             }
         });
@@ -167,7 +197,6 @@ public class MainFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.filter){
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.addToBackStack(null);
             FilterJobsFragment filterJobsFragment = FilterJobsFragment.newInstance();
             filterJobsFragment.show(fragmentTransaction, "dialog");
             return true;

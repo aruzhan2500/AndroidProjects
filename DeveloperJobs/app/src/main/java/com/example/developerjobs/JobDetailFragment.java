@@ -4,8 +4,12 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.Fragment;
 
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +22,10 @@ import com.squareup.picasso.Picasso;
 
 public class JobDetailFragment extends Fragment {
 
-    public String id;
     private TextView title;
     private TextView type;
-    private TextView url;
     private TextView created_at;
     private TextView company;
-    private TextView company_url;
     private TextView location;
     private TextView description;
     private TextView how_to_apply;
@@ -34,13 +35,10 @@ public class JobDetailFragment extends Fragment {
     public static JobDetailFragment newInstance(Job job) {
         JobDetailFragment fragment = new JobDetailFragment();
         Bundle args = new Bundle();
-        args.putString("id", job.getId());
         args.putString("title", job.getTitle());
         args.putString("type", job.getType());
-        args.putString("url", job.getUrl());
         args.putString("created_at", job.getCreatedAt());
         args.putString("company", job.getCompany());
-        args.putString("company_url", job.getCompanyUrl());
         args.putString("location", job.getLocation());
         args.putString("how_to_apply", job.getHowToApply());
         args.putString("description", job.getDescription());
@@ -54,17 +52,22 @@ public class JobDetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,@Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_job_detail, container, false);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Job details ");
+
+        third_card = view.findViewById(R.id.third_card);
+        forth_card = view.findViewById(R.id.forth_card);
+
         third_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                description.setText(getArguments().getString("description"));
+                description.setText(Html.fromHtml(getArguments().getString("description")));
             }
         });
 
         forth_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                how_to_apply.setText(getArguments().getString("how_to_apply"));
+                how_to_apply.setText(Html.fromHtml(getArguments().getString("how_to_apply")));
             }
         });
         return view;
@@ -82,20 +85,22 @@ public class JobDetailFragment extends Fragment {
         how_to_apply = view.findViewById(R.id.how_to_apply);
         logo = view.findViewById(R.id.logo);
 
-        third_card = view.findViewById(R.id.third_card);
-        forth_card = view.findViewById(R.id.forth_card);
+        try{
+            Picasso.get()
+                    .load(getArguments().getString("logo"))
+                    .placeholder(R.drawable.ic_import_contacts_black_24dp)
+                    .error(R.drawable.ic_import_contacts_black_24dp)
+                    .resize(200, 200)
+                    .into(logo);
 
-        Picasso.get()
-                .load(getArguments().getString("logo"))
-                .placeholder(R.drawable.ic_import_contacts_black_24dp)
-                .error(R.drawable.ic_import_contacts_black_24dp)
-                .resize(200, 200)
-                .into(logo);
-
-        title.setText(getArguments().getString("title"));
-        type.setText(getArguments().getString("type"));
-        created_at.setText(getArguments().getString("created_at"));
-        company.setText(getArguments().getString("company"));
-        location.setText(getArguments().getString("location"));
+            title.setText(getArguments().getString("title"));
+            type.setText(getArguments().getString("type"));
+            created_at.setText(getArguments().getString("created_at"));
+            company.setText(getArguments().getString("company"));
+            location.setText(getArguments().getString("location"));
+        }
+        catch (Exception e){
+            Log.e("error:", e + "");
+        }
     }
 }

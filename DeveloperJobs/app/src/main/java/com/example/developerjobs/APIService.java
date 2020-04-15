@@ -9,17 +9,17 @@ import retrofit2.http.Query;
 
 public interface APIService {
 
-    @GET("positions.json?page=1&markdown=true")
+    @GET("positions.json")
     Call<List<Job>> getJobs();
 
-    @GET("positions.json?markdown=true")
+    @GET("positions.json?")
     Call<List<Job>> getJobsFromSearch(@Query("search") String search);
 
-    @GET("positions.json?markdown=true")
+    @GET("positions.json?")
     Call<List<Job>> getFilteredJobs(@Query("description") String description,
                                     @Query("location") String location,
                                     @Query("full_time") boolean full_time);
 
-    @GET("positions/{id}.json?markdown=true")
+    @GET("positions/{id}.json?")
     Call<Job> getJobById(@Path("id") String jobId);
 }
