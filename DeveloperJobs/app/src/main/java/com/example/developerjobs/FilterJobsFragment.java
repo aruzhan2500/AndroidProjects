@@ -41,7 +41,7 @@ public class FilterJobsFragment extends DialogFragment {
         description = view.findViewById(R.id.description);
         location = view.findViewById(R.id.location);
         full_time = view.findViewById(R.id.full_time);
-        filter = view.findViewById(R.id.filter);
+        filter = view.findViewById(R.id.filter_submit);
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,9 +58,16 @@ public class SavedJobsFragment extends Fragment {
 
         adapter = new RecyclerViewAdapter(jobs, clickListener);
         recyclerView.setAdapter(adapter);
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .build();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://jobs.github.com/")
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
                 .build();
         APIService apiService = retrofit.create(APIService.class);
         for(SavedJob s : savedJobs){
