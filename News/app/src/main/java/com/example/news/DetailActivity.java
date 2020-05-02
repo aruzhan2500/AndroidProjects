@@ -149,11 +149,14 @@ public class DetailActivity extends AppCompatActivity implements AppBarLayout.On
         }
         else if (id == R.id.share) {
             try {
+                
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plan");
                 intent.putExtra(Intent.EXTRA_SUBJECT, mSource);
                 String body = mTitle + "\n" + mUrl + "\n" + "Share from the News App" + "\n";
-                intent.putExtra(Intent.)
+                intent.putExtra(Intent.EXTRA_TEXT, body);
+                startActivity(Intent.createChooser(intent, "Share with:"));
+
             } catch (Exception e) {
                 Toast.makeText(this, "Hmm.. Sorry, \nCannot ba share", Toast.LENGTH_SHORT).show();
             }
